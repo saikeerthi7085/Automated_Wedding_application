@@ -1,0 +1,109 @@
+﻿@model Automated_Wedding_Application.Models.PlannerModel
+@{
+    ViewData["Title"] = "EditDeleteCartItems";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="text-center m-5"> Update/ Remove Cart Details</h4>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<div class="container mt-5">
+    <div class="card-body">
+        <div class="row card-text">
+
+            <div class=" col-4">
+                @if (Model.ServicesModel.Serviceimageurl != null)
+                {
+                    <img class="card-img-top" src=@Model.ServicesModel.Serviceimageurl alt="Card image cap" width="40%" height="50%">
+                }
+                else
+                {
+                    @if (Model.ServicesModel.ServiceName == "0")
+                    {
+                        <img class="card-img-top " src="/images/bouquets.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "1")
+                    {
+                        <img class="card-img-top" src="/images/Decoration.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "2")
+                    {
+                        <img class="card-img-top" src="/images/Catering.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "3")
+                    {
+                        <img class="card-img-top" src="/images/Makeup.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "4")
+                    {
+                        <img class="card-img-top" src="/images/photography.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "5")
+                    {
+                        <img class="card-img-top" src="/images/winery.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "6")
+                    {
+                        <img class="card-img-top" src="/images/musicband.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                    @if (Model.ServicesModel.ServiceName == "7")
+                    {
+                        <img class="card-img-top" src="/images/priest.jpg" alt="Card image cap" width="40%" height="50%">
+                    }
+                }
+
+            </div>
+            <div class=" col-8">
+
+                <div class="m-1"><b> Planner Name : </b> @Model.PlannerName</div>
+                <div class="m-1"><b>Service Name :</b>@((PlannerServices)Int32.Parse(Model.ServicesModel.ServiceName))</div>
+                <div class="m-1"><b>Cost:</b>@Model.ServicesModel.Cost</div>
+                <div class="m-1">
+                    <b> Quantity: </b> <input type="number" value=@Model.customerCart.Quantity class="quantity" min="1" style="width:50px" />
+                </div>
+                <div class="m-1">
+
+                    <b>DeliveryDate: </b> <input type="date" class="txtDate" asp-for="@Model.customerCart.DeliveryDate.Date" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center m-2">
+            <a class="btn text-center m-1 test" id="bgcolor1" asp-action="UpdateCartDetails" asp-controller="Customer" asp-route-cartid="@Model.customerCart.CartId" asp-route-quantity="xxx" asp-route-deliverydate="yyy">Update</a>
+            <a class="btn  text-center m-1" id="bgcolor1" href=@Url.Action("RemoveCartDetails", "Customer", new {cartid= Model.customerCart.CartId })>Remove</a>
+            <a class="btn  text-center m-1" id="bgcolor1" href=@Url.Action("GetCartDetails", "Customer")>GoBack</a>
+
+        </div>
+
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.test').click(function () {
+            var quantity = $(".quantity").val();
+            this.href = this.href.replace("xxx", quantity);
+            var date = $(".txtDate").val();
+            this.href = this.href.replace("yyy", date);
+        });
+    });
+    $(function () {
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+
+        var maxDate = year + '-' + month + '-' + day;
+
+        // or instead:
+        // var maxDate = dtToday.toISOString().substr(0, 10);
+
+        $('.txtDate').attr('min', maxDate);
+    });
+</script>
+

@@ -1,0 +1,127 @@
+﻿@model List<Automated_Wedding_Application.Models.PlannerModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class=" container justify-content-center text-center m-5">
+
+    <h3 class="text-center m-3">Welcome to Planner Portal</h3>
+
+
+
+    @if (ViewData["status"].ToString() == "Allupdated")
+    {
+        <h4 class="text-center  m-3">Your Profile is Completed and It is visable to customers</h4>
+        @if (Model.Count == 0) 
+        { 
+
+            <div class="card-body box-shadow m-5">
+                <div class=" card-text">
+                    <h6 class="text-center"> <b>No Orders are available</b> </h6>
+                    </div>
+                </div>
+
+         }
+                    else
+                    {
+                    @foreach (var plannermodel in Model)
+                    {
+
+
+                        <div class="card-body">
+                            <div class="row card-text">
+                                @if (plannermodel.ServicesModel!= null)
+                                {
+
+                               
+                                <div class=" col-3">
+                                    @if (plannermodel.ServicesModel.Serviceimage != null)
+                                    {
+                                        <img class="card-img-top" src=@plannermodel.ServicesModel.Serviceimageurl alt="Card image cap">
+                                    }
+                                    else
+                                    {
+                                        @if (plannermodel.ServicesModel.ServiceName == "0")
+                                        {
+                                            <img class="card-img-top " src="/images/bouquets.jpg" alt="Card image cap">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "1")
+                                        {
+                                            <img class="card-img-top" src="/images/Decoration.jpg" alt="Card image cap">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "2")
+                                        {
+                                            <img class="card-img-top" src="/images/Catering.jpg" alt="Card image cap" width="70" height="70">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "3")
+                                        {
+                                            <img class="card-img-top" src="/images/Makeup.jpg" alt="Card image cap" width="70" height="70">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "4")
+                                        {
+                                            <img class="card-img-top" src="/images/photography.jpg" alt="Card image cap" width="70" height="70">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "5")
+                                        {
+                                            <img class="card-img-top" src="/images/winery.jpg" alt="Card image cap" width="70" height="70">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "6")
+                                        {
+                                            <img class="card-img-top" src="/images/musicband.jpg" alt="Card image cap">
+                                        }
+                                        @if (plannermodel.ServicesModel.ServiceName == "7")
+                                        {
+                                            <img class="card-img-top" src="/images/priest.jpg" alt="Card image cap">
+                                        }
+                                    }
+                                </div>
+                                <div class=" col-6">
+                                    <div><b> Planner Name : </b> @plannermodel.PlannerName</div>
+                                    <div><b>Service Name :</b>@((PlannerServices)Int32.Parse(plannermodel.ServicesModel.ServiceName))</div>
+                                    <div><b>Cost:</b>@plannermodel.ServicesModel.Cost</div>
+                                    <div><b>Quantity:</b>@plannermodel.customerCart.Quantity</div>
+                                    <div><b>Delivery Date:</b>@plannermodel.customerCart.DeliveryDate</div>
+                                    <div><b>Status:</b>@plannermodel.customerCart.Deliverystatus</div>
+                                </div>
+                                <div class="col-3">
+                                    <select name="status" id="status" onchange="updatestatus(this.options[this.selectedIndex].value, @plannermodel.customerCart.CartId )">
+                                        <option>-Status --</option>
+                                        <option value="Recieved">Recieved</option>
+                                        <option value="Dispatched">Dispatched</option>
+                                        <option value="Delivered">Delivered</option>
+                                    </select>
+                                </div>
+                                }
+                            </div>
+
+                        </div>
+
+                    }
+                    }
+
+
+
+
+                    }
+        else
+        {
+             <h5 class="text-center text-danger"> Your Profile is Incomplete </h5>
+             <h6 class="text-center  m-3">Please Complete your profile i.e., your details, Add Services, Payment to make it visiable to Customers</h6>
+        }
+
+</div>
+
+<script>
+
+
+    function updatestatus(status,cartid) {
+
+        let uri = "/Planner/Index?Status=" + status + "&Cartid=" +cartid
+        location.replace(uri);
+    }
+</script>
+
+
+

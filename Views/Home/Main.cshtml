@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Main";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class=" container justify-content-center text-center m-5" style="margin-top:100px;">
+    @*<img src="~/images/fsg-graphic-1.png" alt="Welcome to Eco TO Go" class="customimage" />*@
+    <div class="card mt-lg-5 mb-lg-5 text-center p-5" style="margin-top:25% ; margin-bottom:25%">
+        <div class="row no-gutters  text-center">
+            <div class="col-md-6">
+                <a type="button" href=@Url.Action("PlannerInfo", "Customer") class="btn btn-primary">Search by Planner</a>
+          @*     <img src="~/images/FSG-tableware-eco-to-go-logo-2-01.png" class="card-img" alt="...">*@
+            </div>
+            <div class="col-md-6">
+              
+                    <a type="button " href=@Url.Action("SearchServices", "Customer") class="btn btn-primary">Search by Services</a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@*<div class="container justify-content-md-center">
+
+    <div class="row mt-lg-5">
+        <div class="col-6">
+            <a type="button" href=@Url.Action("PlannerInfo", "Customer") class="btn btn-primary">Search by Planner</a>
+        </div>
+        <div class="col-6 ">
+            <a type="button " href=@Url.Action("SearchServices", "Customer") class="btn btn-primary">Search by Services</a>
+        </div>
+    </div>
+
+</div>*@
+

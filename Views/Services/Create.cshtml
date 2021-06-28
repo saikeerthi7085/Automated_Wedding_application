@@ -1,0 +1,87 @@
+﻿@model Automated_Wedding_Application.Models.ServicesModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<h4 class="text-center">Add Services to Planner</h4>
+<hr />
+
+
+@if (ViewData["Services update"].ToString() == "AlreadyPresent")
+{
+    <div class="text-danger text-center m-3">Selected Service is already Present, Please select different service</div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ServiceName" class="control-label"></label>
+                    <select asp-for="ServiceName" asp-items="Html.GetEnumSelectList<PlannerServices>()" class="form-control">
+                    </select>
+                    <span asp-validation-for="ServiceName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cost" class="control-label"></label>
+                    <input asp-for="Cost" class="form-control" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+
+                    <input type="file" name="imagefile" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PlannerModelPlannerId" class="control-label" hidden></label>
+                    <select asp-for="PlannerModelPlannerId" class="form-control" asp-items="ViewBag.PlannerModelPlannerId" hidden></select>
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+}
+else
+{
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Create"  enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ServiceName" class="control-label"></label>
+                <select asp-for="ServiceName" asp-items="Html.GetEnumSelectList<PlannerServices>()" class="form-control">
+                </select>
+                <span asp-validation-for="ServiceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <input type="file" name="imagefile" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PlannerModelPlannerId" class="control-label" hidden></label>
+                <select asp-for="PlannerModelPlannerId" class="form-control" asp-items="ViewBag.PlannerModelPlannerId" hidden></select>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+}
+
+

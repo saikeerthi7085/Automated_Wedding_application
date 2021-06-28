@@ -1,0 +1,174 @@
+﻿@model Automated_Wedding_Application.Models.PlannerModel
+@{
+    ViewData["Title"] = "PlannerInfo";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<h3 class="text-center m-4">@Model.PlannerName Details</h3>
+
+<div class="mb-4 container">
+    <div class="container-fluid content-row">
+        <div class="row justify-content-center">
+            <div class="card w-100">
+                <div class="card-body  text-center">
+                    @if (Model.Imageurl != null)
+                    {
+                        <img src=@Model.Imageurl alt="~/images/image1.png" width="40%" class="m-2" />
+
+                    }
+                    else
+                    {
+                        <img src="~/images/image1.png" alt="~/images/image1.png" width="40%" class="m-2" />
+                    }
+                    <div class="m-2"><b>About @Model.PlannerName:  </b> @Model.About</div>
+
+                    <div class="m-2"><b>Available Location(s):  </b> @Model.Location</div>
+
+
+                    <div class="m-2"><b>Overall Rating:  </b>@Model.Rating</div>
+
+
+
+
+                    <div class="m-2 text-center"><b>Available Services  </b></div>
+                    <div class="row justify-content-center">
+                        @foreach (var item in Model.services)
+                        {
+                            <div class="col-lg-4 d-flex align-items-stretch mb-4 ">
+
+                                <div class="card mt-5" style="width: 18rem;">
+                                    @if (item.Serviceimage != null)
+                                    {
+                                        <img class="card-img-top" src=@item.Serviceimageurl alt="Card image cap">
+                                    }
+                                    else
+                                    {
+                                        @if (item.ServiceName == "0")
+                                        {
+                                            <img class="card-img-top " src="/images/bouquets.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "1")
+                                        {
+                                            <img class="card-img-top" src="/images/Decoration.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "2")
+                                        {
+                                            <img class="card-img-top" src="/images/Catering.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "3")
+                                        {
+                                            <img class="card-img-top" src="/images/Makeup.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "4")
+                                        {
+                                            <img class="card-img-top" src="/images/photography.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "5")
+                                        {
+                                            <img class="card-img-top" src="/images/winery.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "6")
+                                        {
+                                            <img class="card-img-top" src="/images/musicband.jpg" alt="Card image cap">
+                                        }
+                                        @if (item.ServiceName == "7")
+                                        {
+                                            <img class="card-img-top" src="/images/priest.jpg" alt="Card image cap">
+                                        }
+                                    }
+
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center"> @Model.PlannerName</h5>
+                                        <h6 class="card-title text-center"> @((PlannerServices)Int32.Parse(item.ServiceName))</h6>
+                                        <p class="card-text text-center"><b>Cost(£):</b> @item.Cost</p>
+                                    </div>
+                                    <form class="text-center justify-content-center" asp-controller="Customer" asp-action="AddtoCart" method="post">
+                                        <div class="form-group">
+                                            <input asp-for="PlannerId" value="@Model.PlannerId" hidden />
+                                            <input asp-for="ServiceId" value="@item.ServiceId" hidden />
+                                            <input asp-for="ServicesCost" value="@item.Cost" hidden />
+                                            <input asp-for="ServicesModel.ServiceName" value="@item.ServiceName" hidden />
+                                            <input asp-for="flag" value="Y" hidden />
+
+
+                                            <b> Quantity: </b> <input type="number" value="1" id="quantity" min="1" style="width:50px" asp-for="Quantity" />
+                                        </div>
+                                        <div class="m-1 text-center form-group">
+                                            <b>DeliveryDate: </b> <input type="date" class="txtDate" asp-for="DeliveryDate" required/>
+                                            <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                                        </div>
+                                        <div class="justify-content-center align-content-center">
+                                            <button type="submit" class="btn btn-block w-75 mt-3 mb-3 ml-5" id="bgcolor1">Add to cart</button>
+                                        </div>
+                                    </form>
+                                    <script>
+                                        $(function () {
+                                            $('.test').click(function () {
+                                                var quantity = $(".quantity2").val();
+                                                console.log(quantity);
+                                                this.href = this.href.replace("xxx", quantity);
+                                                var date = $(".txtDate2").val();
+                                                console.log(date);
+                                                //if (date === '') {
+                                                //    var today = new Date();
+                                                //    var dd = String(today.getDate()).padStart(2, '0');
+                                                //    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                                //    var yyyy = today.getFullYear();
+
+                                                //    today = mm + '/' + dd + '/' + yyyy;
+                                                //    date = today + ' 00:00:00';
+                                                //    console.log("inside");
+                                                //    console.log(date);
+                                                //}
+                                                console.log(date);
+                                                this.href = this.href.replace("yyy", date);
+                                            });
+                                        });
+                                        $(function () {
+                                            var dtToday = new Date();
+
+                                            var month = dtToday.getMonth() + 1;
+                                            var day = dtToday.getDate();
+                                            var year = dtToday.getFullYear();
+                                            if (month < 10)
+                                                month = '0' + month.toString();
+                                            if (day < 10)
+                                                day = '0' + day.toString();
+
+                                            var maxDate = year + '-' + month + '-' + day;
+
+                                            // or instead:
+                                            // var maxDate = dtToday.toISOString().substr(0, 10);
+
+                                            $('.txtDate').attr('min', maxDate);
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewData["status"].ToString() == "added")
+                        {
+                            <script>
+                                alert("Service is added to your cart");
+                            </script>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=" row justify-content-center text-center">
+
+        <a asp-action="Detail" class="btn btn-light m-5">Back</a>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,97 @@
+﻿@model List<Automated_Wedding_Application.Models.PlannerModel>
+
+@{
+    ViewData["Title"] = "GetCartDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<h3 class="text-center m-3"> Your Cart Details</h3>
+@if (Model.Count == 0)
+{
+
+    <h4 class="text-center m-5"> Your Cart is Empty</h4>
+    <div class="text-center">
+        <a class="btn text-center m-2" id="bgcolor1" href=@Url.Action("Detail", "Customer")>GoTo Services Page</a>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="text-center">
+            <h5 class="text-center">Total Cart Value : @ViewData["Totalcost"]</h5>
+        </div>
+        @foreach (var plannermodel in Model)
+        {
+
+
+            <div class="card-body">
+                <div class="row card-text">
+
+                    <div class=" col-3">
+                        @if (plannermodel.ServicesModel.Serviceimageurl != null)
+                        {
+                            <img class="card-img-top" src=@plannermodel.ServicesModel.Serviceimageurl alt="Card image cap" width="40%" height="50%">
+                        }
+                        else
+                        {
+                            @if (plannermodel.ServicesModel.ServiceName == "0")
+                            {
+                                <img class="card-img-top " src="/images/bouquets.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "1")
+                            {
+                                <img class="card-img-top" src="/images/Decoration.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "2")
+                            {
+                                <img class="card-img-top" src="/images/Catering.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "3")
+                            {
+                                <img class="card-img-top" src="/images/Makeup.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "4")
+                            {
+                                <img class="card-img-top" src="/images/photography.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "5")
+                            {
+                                <img class="card-img-top" src="/images/winery.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "6")
+                            {
+                                <img class="card-img-top" src="/images/musicband.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                            @if (plannermodel.ServicesModel.ServiceName == "7")
+                            {
+                                <img class="card-img-top" src="/images/priest.jpg" alt="Card image cap" width="40%" height="50%">
+                            }
+                        }
+
+                    </div>
+                    <div class=" col-6">
+                        <div><b> Planner Name : </b> @plannermodel.PlannerName</div>
+                        <div><b>Service Name :</b>@((PlannerServices)Int32.Parse(plannermodel.ServicesModel.ServiceName))</div>
+                        <div><b>Cost:</b>@plannermodel.ServicesModel.Cost</div>
+                        <div><b>Quantity:</b>@plannermodel.customerCart.Quantity</div>
+                        <div><b>Delivery Date:</b>@plannermodel.customerCart.DeliveryDate</div>
+                    </div>
+                    <div class=" col-3">
+                        <a class="btn   text-center m-2" id="bgcolor1" href=@Url.Action("EditDeleteCartItems", "Customer", new { cartid=plannermodel.customerCart.CartId })>Edit/Remove CartItems</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row justify-content-center m-5">
+        <a class="btn text-center m-2" id="bgcolor1" href=@Url.Action("Checkout", "Customer", new {TotalCost = @ViewData["Totalcost"] })>Checkout</a>
+        <a class="btn  text-center m-2" id="bgcolor1" href=@Url.Action("Detail", "Customer")>Back to shopping</a>
+    </div>
+}
+
+
+
+
+
+

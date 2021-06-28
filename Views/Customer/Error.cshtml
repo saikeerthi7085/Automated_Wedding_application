@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Error";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container m-3">
+    <h5 class="text-center text-danger m-3"> Transaction is failed Check below Error and Retry</h5>
+
+    <h6 class="text-center text-danger m-3"> @ViewData["error"]</h6>
+    <div class="text-center">
+        <a class="btn  text-center m-1" id="bgcolor1" href=@Url.Action("GetCartDetails", "Customer")>GoBack</a>
+    </div>
+</div>
+

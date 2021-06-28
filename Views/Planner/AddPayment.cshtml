@@ -1,0 +1,21 @@
+﻿@model Automated_Wedding_Application.Areas.Identity.Data.ApplicationUser;
+@{
+    ViewData["Title"] = "AddPayment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    @if (Model.userstripeId == null)
+    {
+        <h4 class="text-center m-5">Add payment to your profile using stripe</h4>
+        <div class="justify-content-center text-center">
+            <a class="btn btn-primary " href="@Url.Action("ConnecttoStrip","Planner")">Setup Stripe Connect</a>
+        </div>
+    }
+    else
+    {
+        <h4 class="text-center m-5">Your Payment is set up with Stripe</h4>
+        <div class="justify-content-center text-center">
+            <h6 class="text-center font-weight-bold">Your Stripe Id is : @Model.userstripeId</h6>
+        </div>
+    }
+</div>

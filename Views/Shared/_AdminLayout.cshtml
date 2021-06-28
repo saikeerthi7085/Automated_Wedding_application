@@ -1,0 +1,209 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using System.Security.Claims;
+@{
+   
+    
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@ViewData["Title"] - Automated Wedding</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+  <style>
+      .cart-basket {
+          font-size: .6rem;
+          position: absolute;
+          top: -6px;
+          right: -5px;
+          width: 15px;
+          height: 15px;
+          color: #fff;
+          background-color: #418deb;
+          border-radius: 50%;
+      }
+  </style>
+</head>
+<body>
+
+    @if (Context.Session.GetString("UserType") == "Planner")
+    {
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-primary">
+            <a class="navbar-brand" href="index.html">Planner Portal</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="/Identity/Account/Manage">Account Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button id="logout" type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav m-2">
+
+                            <a class="nav-link" asp-controller="Planner" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <a class="nav-link" href=@Url.Action("Profile", "Planner")>
+                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                Profile
+                            </a>
+
+                            <a class="nav-link" href=@Url.Action("Index", "Services")>
+                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                Services
+                            </a>
+                            <a class="nav-link" asp-controller="Planner" asp-action="AddPayment">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Payment
+                            </a>
+                            <a class="nav-link" asp-controller="Planner" asp-action="PastOrders">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Past Orders
+                            </a>
+                            @*<a class="nav-link" asp-area="Admin" asp-controller="Planner" asp-action="Services">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            Feedback
+        </a>*@
+                            <a class="nav-link" href=@Url.Action("Contact", "Planner")>
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Contact US
+                            </a>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        @(User.HasClaim(x => x.Type == ClaimTypes.Name) ? User.Claims.First(x => x.Type == ClaimTypes.Name).Value : "Unknown User")
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; 2020 - Automated Wedding Application </div>
+                            <div>
+                                <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+                                &middot;
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    }
+
+
+    @if (Context.Session.GetString("UserType") == "Customer")
+    {
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  " id="bgcolor2">
+            <div class="container">
+                <h4><a class="navbar-brand text-white" asp-area="" asp-controller="Customer" asp-action="Detail"> Customer Portal</a> </h4>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                </form>
+                <ul class="navbar-nav ml-auto ml-md-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link cart" id="shoppingcart" href=@Url.Action("GetCartDetails", "Customer") role="button"><i class="fas fa-shopping-cart fa-fw " style="color:white"></i></a>
+
+                    </li>
+                </ul>
+                <!-- Navbar-->
+                <ul class="navbar-nav ml-auto ml-md-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" style="color:white" aria-expanded="false"><i class="fas fa-user fa-fw " style="color:white"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="color:white">
+                            <a class="dropdown-item" href="/Identity/Account/Manage">Account Settings</a>
+                            <a class="dropdown-item" href=@Url.Action("Detail", "Customer")>
+                                Planners
+                            </a>
+
+                            <a class="dropdown-item" href=@Url.Action("Bookings", "Customer")>
+                                Current Bookings
+                            </a>
+                            <a class="dropdown-item" href=@Url.Action("PastOrders", "Customer")>
+                                Past Bookings
+                            </a>
+                            <a class="dropdown-item" href=@Url.Action("Contact", "Customer")>
+                                Contact US
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button id="logout" type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <!-- End of ChatBot code -->
+        <div>
+            <main role="main" class="">
+                <div class="">
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
+        <div style="bottom:0" class="mt-5"></div>
+        @*<footer contentEditable id="footer" class="border-top footer text-muted topcolor fixed-bottom " style="margin-top: auto; bottom: 0; width: 100%;">
+                    &copy; 2020 - Automated Wedding Application - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="customcolor">Privacy</a>
+            </footer>*@
+        <!-- Start of ChatBot (www.chatbot.com) code -->
+        <!-- Start of ChatBot (www.chatbot.com) code -->
+        <script type="text/javascript">
+            window.__be = window.__be || {};
+            window.__be.id = "60c2e45a420fce00071032d2";
+            (function () {
+                var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+                be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+            })();
+        </script>
+        <!-- End of ChatBot code -->
+        <!-- End of ChatBot code -->
+
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

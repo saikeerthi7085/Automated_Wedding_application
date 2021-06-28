@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Automated_Wedding_Application.Models.ServicesModel>
+@using System.ComponentModel.DataAnnotations.Schema
+@using Automated_Wedding_Application.Models;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container">
+    @if (Model.Count() == 0)
+    {
+        <h4 class="text-center m-4"> Currently No Services Are added , Please Add the Services</h4>
+        <div class="justify-content-center ml-5 text-center"><a asp-action="Create" class=" text-center btn btn-success">Create New Service</a></div>
+    }
+    @if (Model.Count() != 0)
+    {
+        <div class="justify-content-center">
+            <h3 class="text-center m-4"> Your Services</h3>
+            <a asp-action="Create" class="btn btn-success" style="margin-left:425px;">Add New Service</a>
+        </div>
+
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 d-flex align-items-stretch ">
+
+                    <div class="card m-5" style="width: 18rem;">
+                        @if (item.Serviceimage != null)
+                        {
+                            <img class="card-img-top" src=@item.Serviceimageurl alt="Card image cap">
+                        }
+                        else
+                        {
+                            @if (item.ServiceName == "0")
+                            {
+                                <img class="card-img-top " src="/images/bouquets.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "1")
+                            {
+                                <img class="card-img-top" src="/images/Decoration.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "2")
+                            {
+                                <img class="card-img-top" src="/images/Catering.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "3")
+                            {
+                                <img class="card-img-top" src="/images/Makeup.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "4")
+                            {
+                                <img class="card-img-top" src="/images/photography.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "5")
+                            {
+                                <img class="card-img-top" src="/images/winery.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "6")
+                            {
+                                <img class="card-img-top" src="/images/musicband.jpg" alt="Card image cap">
+                            }
+                            @if (item.ServiceName == "7")
+                            {
+                                <img class="card-img-top" src="/images/priest.jpg" alt="Card image cap">
+                            }
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title text-center"> @((PlannerServices)Int32.Parse(item.ServiceName))</h5>
+                            <p class="card-text text-center"><b>Cost(£):</b> @item.Cost</p>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <a asp-action="Edit" asp-route-id="@item.ServiceId" class="m-2">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.ServiceId" class="m-2">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>
